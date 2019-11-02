@@ -64,7 +64,7 @@ export default function HomeScreen() {
           style={[styles.codeHighlightContainer, styles.navigationFilename]}
         >
           <MonoText style={styles.codeHighlightText}>
-            navigation/MainTabNavigator.js
+            navigation/MainNavigator.js
           </MonoText>
         </View>
       </View>
