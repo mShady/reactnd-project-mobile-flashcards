@@ -21,10 +21,15 @@ class AddDeckScreen extends Component {
 
   handleAddDeck = () => {
     const title = this.state.deckTitle;
-    const { dispatch } = this.props;
-    saveDeckTitle(title).then(deck => {
-      dispatch(upsertDeck(deck));
-    });
+    const { dispatch, navigation } = this.props;
+    this.setState({ deckTitle: "" });
+    saveDeckTitle(title)
+      .then(deck => {
+        dispatch(upsertDeck(deck));
+      })
+      .then(() => {
+        navigation.navigate("DeckDetailsScreen", { deckId: title });
+      });
   };
 
   render() {
