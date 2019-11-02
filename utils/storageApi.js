@@ -16,10 +16,13 @@ export function getDeck(key) {
 }
 
 export function saveDeckTitle(title) {
+  const newDeck = deckFactory(title);
   return AsyncStorage.mergeItem(
     MOBILE_FLASHCARDS_STORAGE_KEY,
-    JSON.stringify(deckFactory(title))
-  );
+    JSON.stringify(newDeck)
+  ).then(() => {
+    return newDeck;
+  });
 }
 
 export function addCardToDeck(title, card) {
@@ -30,14 +33,13 @@ export function addCardToDeck(title, card) {
       questions: data[title].questions.concat(card)
     };
     AsyncStorage.setItem(MOBILE_FLASHCARDS_STORAGE_KEY, JSON.stringify(data));
+    return data[title];
   });
 }
 
 const deckFactory = title => ({
   [title]: {
-    React: {
-      title,
-      questions: []
-    }
+    title,
+    questions: []
   }
 });
