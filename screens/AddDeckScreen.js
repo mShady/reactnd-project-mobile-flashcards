@@ -1,18 +1,56 @@
-import React from "react";
-import { Platform, StyleSheet, ScrollView, Text, View } from "react-native";
+import React, { Component } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  KeyboardAvoidingView
+} from "react-native";
+import TextButton from "../components/TextButton";
+import { saveDeckTitle } from "../utils/storageApi";
+import { connect } from "react-redux";
+import { upsertDeck } from "../actions";
 
-export default function AddDeckScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
+class AddDeckScreen extends Component {
+  state = {
+    deckTitle: ""
+  };
+
+  handleChangeText = deckTitle => {
+    this.setState({ deckTitle });
+  };
+
+  handleAddDeck = () => {
+    const title = this.state.deckTitle;
+    const { dispatch } = this.props;
+    saveDeckTitle(title).then(deck => {
+      dispatch(upsertDeck(deck));
+    });
+  };
+
+  render() {
+    return (
+      <KeyboardAvoidingView
         contentContainerStyle={styles.contentContainer}
+        style={styles.container}
+        behavior="padding"
+        enabled
       >
-        <Text>Add Deck Screen</Text>
-      </ScrollView>
-    </View>
-  );
+        <Text style={styles.questionText}>
+          What is the title of your new deck?
+        </Text>
+        <TextInput
+          value={this.state.deckTitle}
+          style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+          placeholder="Deck Title"
+          onChangeText={this.handleChangeText}
+        />
+        <TextButton text="Add" onPress={this.handleAddDeck}></TextButton>
+      </KeyboardAvoidingView>
+    );
+  }
 }
+
+export default connect()(AddDeckScreen);
 
 AddDeckScreen.navigationOptions = {
   header: null
@@ -23,86 +61,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff"
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: "rgba(0,0,0,0.4)",
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center"
-  },
   contentContainer: {
     paddingTop: 30
   },
-  welcomeContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: "contain",
-    marginTop: 3,
-    marginLeft: -10
-  },
-  getStartedContainer: {
-    alignItems: "center",
-    marginHorizontal: 50
-  },
-  homeScreenFilename: {
-    marginVertical: 7
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)"
-  },
-  codeHighlightContainer: {
-    backgroundColor: "rgba(0,0,0,0.05)",
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
+  questionText: {
+    fontSize: 20,
+    color: "black",
     lineHeight: 24,
-    textAlign: "center"
-  },
-  tabBarInfoContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: "black",
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: "center",
-    backgroundColor: "#fbfbfb",
-    paddingVertical: 20
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    textAlign: "center"
-  },
-  navigationFilename: {
-    marginTop: 5
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: "center"
-  },
-  helpLink: {
-    paddingVertical: 15
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: "#2e78b7"
+    textAlign: "center",
+    margin: 20
   }
 });
