@@ -1,17 +1,23 @@
 import React, { Component } from "react";
-import { Text, ScrollView, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import TextButton from "../components/TextButton";
+import ViewShot from "react-native-view-shot";
 
 class DeckDetailsScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { deckId } = navigation.state.params;
+
+    return {
+      title: deckId
+    };
+  };
+
   render() {
     const { deck, navigation } = this.props;
     return (
-      <ScrollView
-        contentContainerStyle={styles.contentContainer}
-        style={styles.container}
-      >
-        <Text style={[styles.text, { fontSize: 40 }]}>{deck.title}</Text>
+      <View>
+        <Text style={[styles.text, { fontSize: 60 }]}>{deck.title}</Text>
         <Text style={styles.text}>{deck.questions.length} cards</Text>
 
         <TextButton
@@ -30,7 +36,7 @@ class DeckDetailsScreen extends Component {
             })
           }
         ></TextButton>
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -49,7 +55,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     color: "black",
-    lineHeight: 24,
     textAlign: "center",
     margin: 20
   },
