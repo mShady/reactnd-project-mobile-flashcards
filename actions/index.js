@@ -8,9 +8,9 @@ export function receiveDecks(decks) {
   };
 }
 
-export function upsertDeck(title) {
+export function upsertDeck(deck) {
   return {
     type: UPSERT_DECK,
-    title
+    deck
   };
 }
