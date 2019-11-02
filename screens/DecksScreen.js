@@ -1,18 +1,42 @@
-import React from "react";
+import React, { Component } from "react";
 import { Platform, StyleSheet, ScrollView, Text, View } from "react-native";
+import { connect } from "react-redux";
+import { getDecks } from "../utils/storageApi";
+import { receiveDecks } from "../actions";
+import Deck from "../components/Deck";
 
-export default function DecksScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <Text>Decks Screen</Text>
-      </ScrollView>
-    </View>
-  );
+class DecksScreen extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    getDecks().then(decks => {
+      dispatch(receiveDecks(decks));
+    });
+  }
+
+  render() {
+    const { deckIds, navigation } = this.props;
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          {deckIds.map(id => (
+            <Deck key={id} deckId={id} navigation={navigation}></Deck>
+          ))}
+        </ScrollView>
+      </View>
+    );
+  }
 }
+
+function mapStateToProps(decks) {
+  return {
+    deckIds: Object.keys(decks)
+  };
+}
+
+export default connect(mapStateToProps)(DecksScreen);
 
 DecksScreen.navigationOptions = {
   header: null
