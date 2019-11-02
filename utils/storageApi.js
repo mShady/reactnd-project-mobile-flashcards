@@ -1,5 +1,5 @@
 import { AsyncStorage } from "react-native";
-export const MOBILE_FLASHCARDS_STORAGE_KEY = "MOBILE_FLASHCARDS_STORAGE_KEY";
+const MOBILE_FLASHCARDS_STORAGE_KEY = "MOBILE_FLASHCARDS_STORAGE_KEY";
 
 export function submitEntry({ key, entry }) {
   return AsyncStorage.mergeItem(
