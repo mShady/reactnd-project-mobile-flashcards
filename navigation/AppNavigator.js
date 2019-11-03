@@ -3,6 +3,7 @@ import { createAppContainer, createStackNavigator } from "react-navigation";
 import MainNavigator from "./MainNavigator";
 import DeckDetailsScreen from "../screens/DeckDetailsScreen";
 import AddCardScreen from "../screens/AddCardScreen";
+import QuizScreen from "../screens/QuizScreen";
 
 export default createAppContainer(
   createStackNavigator({
@@ -14,6 +15,9 @@ export default createAppContainer(
     },
     AddCardScreen: {
       screen: AddCardScreen
+    },
+    QuizScreen: {
+      screen: QuizScreen
     }
   })
 );

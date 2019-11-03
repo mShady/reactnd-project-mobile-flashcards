@@ -11,6 +11,9 @@ const switchNavigator = createSwitchNavigator({
   DeckDetailsScreen: {
     screen: DeckDetailsScreen,
     navigationOptions: { title: "Deck Details" }
+  },
+  QuizScreen: {
+    screen: QuizScreen
   }
 });
 switchNavigator.path = "";
