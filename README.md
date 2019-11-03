@@ -2,6 +2,10 @@
 
 This a personal project created to submit as part of my React Nano Degree with Udacity.
 
+## Testing
+
+The app was tested only on an Android device
+
 # Instructions for installing and launching the project
 
 ## Using npm
