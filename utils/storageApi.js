@@ -33,7 +33,7 @@ export function addCardToDeck(title, card) {
       questions: data[title].questions.concat(card)
     };
     AsyncStorage.setItem(MOBILE_FLASHCARDS_STORAGE_KEY, JSON.stringify(data));
-    return data[title];
+    return { [title]: data[title] };
   });
 }
 

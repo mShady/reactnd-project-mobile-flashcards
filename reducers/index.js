@@ -10,7 +10,7 @@ function decks(state = {}, action) {
     case UPSERT_DECK:
       return {
         ...state,
-        [action.deck.title]: action.deck
+        ...action.deck
       };
     default:
       return state;
