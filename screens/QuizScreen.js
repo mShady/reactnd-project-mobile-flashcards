@@ -7,12 +7,13 @@ import {
   setLocalNotification
 } from "../utils/notifications";
 
+const initialState = {
+  showAnswer: false,
+  questionIndex: 0,
+  correctAnswers: 0
+};
 class QuizScreen extends Component {
-  state = {
-    showAnswer: false,
-    questionIndex: 0,
-    correctAnswers: 0
-  };
+  state = initialState;
   static navigationOptions = ({ navigation }) => {
     const { deckId } = navigation.state.params;
 
@@ -84,6 +85,20 @@ class QuizScreen extends Component {
             Score: {correctAnswers}/{questionsCount} (
             {parseFloat((correctAnswers / questionsCount) * 100).toFixed(2)} %)
           </Text>
+
+          <TextButton
+            text="Restart Quiz"
+            onPress={() => this.setState(() => initialState)}
+          ></TextButton>
+
+          <TextButton
+            text="Back to Deck"
+            onPress={() =>
+              navigation.navigate("DeckDetailsScreen", {
+                deckId: deck.title
+              })
+            }
+          ></TextButton>
         </View>
       );
     }
